@@ -1,8 +1,46 @@
 <template name="challenges">
-  <div class="col-xs-12 fill-height">
-    {{#each challenges}}
-      {{title}}
-      {{description}}
-    {{/each}}
+  <div class="col-xs-8 fill-height">
+    <div class="challenge-list">
+      <div class="challenge-item">
+        <a href="{{pathFor 'editor'}}">this is a good challenge</a>
+        <p>this is a very good challenge you should try it out</p>
+        <!-- <small>Posted at {{formatDate createdAt}}</small> -->
+      </div>
+      {{#each challenges}}
+        <div class="challenge-item">
+          {{title}}
+          {{{htmlDescription}}}
+        </div>
+      {{/each}}
+
+      {{#if showMore}}
+        <button id="js-show-more" class="btn btn-default">Show More</button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <div class="challenge-create">
+      {{#if currentUser}}
+        <form id="challenge-create">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title"
+            placeholder="Title">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description"
+            placeholder="Description">
+          </div>
+          <div class="form-group">
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions" class="form-control" placeholder="Instructions (Markdown supported)"></textarea>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        {{else}}
+          Sign in to create a challenge!
+        {{/if}}
+      </div>
   </div>
 </template>

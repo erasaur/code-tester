@@ -1,0 +1,29 @@
+.editor.ace_editor {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.editor-challenge {
+  padding: 0;
+}
+.editor-challenge-header,
+.editor-challenge-help {
+  text-align: center;
+  height: 50px;
+  background-color: #EFEFEF;
+  border: 1px solid #D3D3D3;
+  color: #797979;
+}
+.editor-challenge-header,
+.editor-challenge-body,
+.editor-challenge-help {
+  padding: 15px;
+}
+.editor-challenge-help {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

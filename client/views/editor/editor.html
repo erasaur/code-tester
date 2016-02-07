@@ -1,0 +1,26 @@
+<template name="editor">
+  <div class="col-xs-2 fill-height challenge-container">
+    <div class="challenge-header">
+      some challenge header
+    </div>
+    <div class="challenge-body">
+      this is the challenge!
+    </div>
+    <button class="challenge-help">
+      help!
+    </button>
+  </div>
+  <div class="col-xs-7 fill-height">
+    <div id="editor" class="editor"></div>
+    {{#if loading}}
+      Loading ...
+    {{/if}}
+    <div class="editor-action">
+    </div>
+  </div>
+  <div class="col-xs-3 fill-height challenge-container">
+    <div class="challenge-header">
+      Results:
+    </div>
+  </div>
+</template>

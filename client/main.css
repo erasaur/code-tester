@@ -1,0 +1,33 @@
+html, 
+body {
+  height: 100%;
+}
+body {
+  background-color: #fff;
+  overflow: hidden;
+}
+.main.row {
+  padding-top: 50px;
+}
+.fill-height {
+  height: 100%;
+}
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+.navbar-dark {
+  background-color: #3A3A3A;
+  border-color: #555651;
+}
+.navbar-dark .navbar-brand {
+ color: #F8F8F2;
+}
+.navbar .container {
+  width: 100%;
+  margin: 0;
+}
+.main.container {
+  margin: 0;
+  width: 100%;
+}

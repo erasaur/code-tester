@@ -1,20 +1,16 @@
 <template name="challenges">
   <div class="col-xs-8 fill-height">
     <div class="challenge-list">
-      <div class="challenge-item">
-        <a href="{{pathFor 'editor'}}">this is a good challenge</a>
-        <p>this is a very good challenge you should try it out</p>
-        <!-- <small>Posted at {{formatDate createdAt}}</small> -->
-      </div>
       {{#each challenges}}
         <div class="challenge-item">
-          {{title}}
-          {{{htmlDescription}}}
+          <a href="{{pathFor 'editor'}}">{{title}}</a>
+          <p>{{description}}</p>
+          <small>Posted on {{formatDate createdAt}}</small>
         </div>
       {{/each}}
 
       {{#if showMore}}
-        <button id="js-show-more" class="btn btn-default">Show More</button>
+        <button id="js-show-more" class="btn btn-primary btn-wide">Show More</button>
       {{/if}}
     </div>
   </div>

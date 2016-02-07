@@ -65,7 +65,7 @@ Template.challenges.events({
 
     Meteor.call('createChallenge', challenge, function (error, result) {
       if (error) {
-        if (typeof error.reason === 'string') {
+        if (_.isString(error.reason)) {
           alert(error.error);
         } else {
           alert('Oops, something went wrong. Please try again later!');

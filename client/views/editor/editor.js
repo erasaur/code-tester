@@ -1,9 +1,8 @@
 Template.editor.onCreated(function () {
-  this._loading = new ReactiveVar(true);
-  this._challengeId = Router.current().params._id;
-
-  console.log(this._challengeId);
-  this.subscribe('challenge', this._challengeId);
+  var self = this;
+  self._loading = new ReactiveVar(true);
+  self._challengeId = Router.current().params._id;
+  self.subscribe('challenge', self._challengeId);
 });
 
 Template.editor.onRendered(function () {
@@ -15,6 +14,22 @@ Template.editor.onRendered(function () {
     editor.getSession().setMode('ace/mode/javascript');
     editor.setValue('// Enter your solution to the challenge here!');
     editor.clearSelection();
+
+    var tester = new CodeTester(editor);
+
+    self.autorun(function () {
+      var challenge = Challenges.findOne(self._challengeId);
+
+      if (challenge) {
+        tester.whitelist(challenge.whitelist);
+        tester.blacklist(challenge.blacklist);
+        tester.structure(challenge.structure);
+      }
+    });
+
+    tester.onTest(function (results) {
+      console.log(results);
+    });
   });
 });
 
@@ -26,5 +41,11 @@ Template.editor.helpers({
   'challenge': function () {
     var template = Template.instance();
     return Challenges.findOne(template._challengeId);
+  }
+});
+
+Template.editor.events({
+  'click #js-run': function (event, template) {
+
   }
 });

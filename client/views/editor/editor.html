@@ -10,7 +10,7 @@
     <div class="challenge-body">
       {{{challenge.htmlInstructions}}}
     </div>
-    <button class="challenge-help">
+    <button class="challenge-action btn-help">
       help!
     </button>
   </div>
@@ -19,12 +19,19 @@
     {{#if loading}}
       Loading editor...
     {{/if}}
-    <div class="editor-action">
-    </div>
   </div>
   <div class="col-xs-3 fill-height challenge-container">
-    <div class="challenge-header">
-      Results:
+    <button class="challenge-action js-run">
+      Run Code
+    </button>
+
+    <div class="challenge-body">
+      {{#if output}}
+        <label>Output</label>
+        <pre>{{output}}</pre>
+      {{else}}
+        Press "Run Code" to see the output.
+      {{/if}}
     </div>
   </div>
 </template>

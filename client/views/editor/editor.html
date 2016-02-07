@@ -1,10 +1,14 @@
 <template name="editor">
   <div class="col-xs-2 fill-height challenge-container">
     <div class="challenge-header">
-      some challenge header
+      {{#if Template.subscriptionsReady}}
+        {{challenge.title}}
+      {{else}}
+        Loading instructions...
+      {{/if}}
     </div>
     <div class="challenge-body">
-      this is the challenge!
+      {{{challenge.htmlInstructions}}}
     </div>
     <button class="challenge-help">
       help!
@@ -13,7 +17,7 @@
   <div class="col-xs-7 fill-height">
     <div id="editor" class="editor"></div>
     {{#if loading}}
-      Loading ...
+      Loading editor...
     {{/if}}
     <div class="editor-action">
     </div>

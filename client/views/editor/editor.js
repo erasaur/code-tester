@@ -1,5 +1,9 @@
 Template.editor.onCreated(function () {
   this._loading = new ReactiveVar(true);
+  this._challengeId = Router.current().params._id;
+
+  console.log(this._challengeId);
+  this.subscribe('challenge', this._challengeId);
 });
 
 Template.editor.onRendered(function () {
@@ -18,5 +22,9 @@ Template.editor.helpers({
   'loading': function () {
     var template = Template.instance();
     return template._loading.get();
+  },
+  'challenge': function () {
+    var template = Template.instance();
+    return Challenges.findOne(template._challengeId);
   }
 });

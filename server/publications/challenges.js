@@ -12,7 +12,7 @@ Meteor.publish('challenges', function (limit) {
   });
 
   return [
-    Challenges.find({ '_id': { $in: challengeIds } }),
+    Challenges.find({ '_id': { $in: challengeIds } }, { fields: { title: 1, description: 1, createdAt: 1, createdBy: 1 } }),
     Meteor.users.find({ '_id': { $in: userIds } })
   ];
 });

@@ -1,0 +1,6 @@
+settings.json
+mup.json
+*.swp
+*.swo
+*~
+.idea

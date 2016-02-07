@@ -4,8 +4,8 @@ Meteor.methods({
       title: String,
       description: String,
       instructions: String,
-      whitelist: [String],
-      blacklist: [String],
+      whitelist: String,
+      blacklist: String,
       structure: String
     });
 
@@ -24,8 +24,8 @@ Meteor.methods({
     challenge.createdAt = new Date();
     challenge.createdBy = this.userId;
     challenge.requirements = {
-      whitelist: challenge.whitelist,
-      blacklist: challenge.blacklist,
+      whitelist: challenge.whitelist.split(','),
+      blacklist: challenge.blacklist.split(','),
       structure: challenge.structure
     };
 

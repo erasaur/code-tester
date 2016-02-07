@@ -36,16 +36,31 @@ Template.challenges.events({
     var title = template.find('#title').value;
     var description = template.find('#description').value;
     var instructions = template.find('#instructions').value;
+    var whitelist = template.find('#whitelist').value;
+    var blacklist = template.find('#blacklist').value;
+    var structure = template.find('#structure').value;
 
     if (!title || !description || !instructions) {
-      alert('Please fill in all the fields');
+      alert('Please fill in title, description, and instructions');
       return;
+    }
+
+    if (structure) {
+      try {
+        JSON.parse(structure);
+      } catch (error) {
+        alert('Please enter valid JSON for structure');
+        return;
+      }
     }
 
     var challenge = {
       title: title,
       description: description,
-      instructions: instructions
+      instructions: instructions,
+      whitelist: whitelist,
+      blacklist: blacklist,
+      structure: structure
     };
 
     Meteor.call('createChallenge', challenge, function (error, result) {
@@ -53,7 +68,7 @@ Template.challenges.events({
         if (typeof error.reason === 'string') {
           alert(error.error);
         } else {
-          alert('Oops, something went wrong. Make sure you completed all fields!');
+          alert('Oops, something went wrong. Please try again later!');
         }
       } else {
         Router.go('editor', { _id: result });

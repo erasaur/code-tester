@@ -36,11 +36,23 @@
             <label for="instructions">Instructions</label>
             <textarea id="instructions" class="form-control" placeholder="Instructions (Markdown supported)"></textarea>
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <div class="form-group">
+            <label for="whitelist">Whitelist</label>
+            <textarea id="whitelist" class="form-control" placeholder="Whitelist (comma separated)"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="blacklist">Blacklist</label>
+            <textarea id="blacklist" class="form-control" placeholder="Blacklist (comma separated)"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="structure">Structure</label>
+            <textarea id="structure" class="form-control" placeholder="JSON representation of structure"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-wide">Submit</button>
         </form>
-        {{else}}
-          Sign in to create a challenge!
-        {{/if}}
-      </div>
+      {{else}}
+        Sign in to create a challenge!
+      {{/if}}
+    </div>
   </div>
 </template>

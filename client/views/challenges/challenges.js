@@ -36,9 +36,13 @@ Template.challenges.events({
   'submit #challenge-create': function (event, template) {
     event.preventDefault();
 
+    // TODO better form handling
+    // TODO allow adding test cases
+
     var title = template.find('#title').value;
     var description = template.find('#description').value;
     var instructions = template.find('#instructions').value;
+    var answer = template.find('#answer').value;
     var whitelist = template.find('#whitelist').value;
     var blacklist = template.find('#blacklist').value;
     var structure = template.find('#structure').value;

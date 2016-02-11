@@ -10,9 +10,9 @@
     <div class="challenge-body">
       {{{challenge.htmlInstructions}}}
     </div>
-    <button class="challenge-action btn-help">
-      help!
-    </button>
+    <!-- <button class="challenge-action btn-help"> -->
+    <!--   help! -->
+    <!-- </button> -->
   </div>
   <div class="col-xs-7 fill-height editor-container">
     <div id="editor" class="editor"></div>
@@ -28,9 +28,9 @@
         {{#if output}}
           <pre>{{output}}</pre>
 
-          {{#if answer}}
+          {{#if challenge.answer}}
             <label>Expected output</label>
-            <pre>{{answer}}</pre>
+            <pre>{{challenge.answer}}</pre>
           {{/if}}
         {{else}}
           Press "Run Code" to see the output.
@@ -41,34 +41,34 @@
       <div class="feedback-container">
         {{#if feedback}}
           {{#if feedback.missing.length}}
-            <label class="feedback-error">
+            <label class="feedback feedback-error">
               Missing tokens: 
               <p>{{feedback.missing}}</p>
             </label>
           {{else}}
-            <label class="feedback-success">
+            <label class="feedback feedback-success">
               <p>Good job! Not missing any required tokens.</p>
             </label>
           {{/if}}
 
           {{#if feedback.extra.length}}
-            <label class="feedback-error">
+            <label class="feedback feedback-error">
               Should not contain: 
               <p>{{feedback.extra}}</p>
             </label>
           {{else}}
-            <label class="feedback-success">
+            <label class="feedback feedback-success">
               <p>Good job! Not using blacklisted tokens.</p>
             </label>
           {{/if}}
 
           {{#if feedback.invalidStructure}}
-            <label class="feedback-error">
+            <label class="feedback feedback-error">
               Should follow structure: 
               <p>{{challenge.requirements.structure}}</p>
             </label>
           {{else}}
-            <label class="feedback-success">
+            <label class="feedback feedback-success">
               <p>Good job! Code structure looks good.</p>
             </label>
           {{/if}}

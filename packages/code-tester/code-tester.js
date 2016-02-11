@@ -13,6 +13,11 @@ CodeTester = (function () {
     }
   }
 
+  /**
+   * Method that wraps CodeTester around an input element, so that it can
+   * automatically hook into the input changes and apply tests automatically.
+   * @param {Object} options A jQuery input or Ace Editor instance
+   */
   CodeTester.prototype.load = function loadTester (options) {
     var lazyChange = _.bind(_.debounce(this.change, DEBOUNCE_MS), this);
 
@@ -31,6 +36,14 @@ CodeTester = (function () {
     }
   };
 
+  /**
+   * Test code based on given constraints. If not wrapping CodeTester around
+   * an existing input element, contraints must be provided with the input;
+   * namely, separate arrays containing whitelisted and blacklisted tokens,
+   * as well as a JSON string representing a valid AST.
+   * A codeString option must also be provided in the options object.
+   * @param {Object} options Object containing constraints and code string
+   */
   CodeTester.test = function testConstraints (options) {
     if (!_.isObject(options)) {
       console.log('CodeTester.test requires an options object');
@@ -81,18 +94,42 @@ CodeTester = (function () {
     return result;
   };
 
+  /**
+   * Returns a list of tokens in whitelist but not in keywords.
+   * @param {Object} keywords Array of tokens
+   * @param {Object} whitelist Array of required tokens
+   */
   CodeTester.testWhitelist = function testWhitelist (keywords, whitelist) {
     return _.difference(whitelist, keywords);
   };
 
+  /**
+   * Returns a list of tokens in blacklist and in keywords.
+   * @param {Object} keywords Array of tokens
+   * @param {Object} blacklist Array of forbidden tokens
+   */
   CodeTester.testBlacklist = function testBlacklist (keywords, blacklist) {
     return _.intersection(blacklist, keywords);
   };
 
-  CodeTester.testStructure = function testStructure (syntaxTree, structure) {
+  /**
+   * Traverses the given syntaxTree and checks if it matches the desired
+   * structure. Set skipBlocks to true if BlockStatements are to be ignored
+   * when matching.
+   * @param {Object} syntaxTree Tree of the format returned by esprima.parse
+   * @param {Object} structure JSON string of desired structure (AST format)
+   * @param {Boolean} skipBlocks Whether or not to ignore BlockStatements when
+   * traversing syntaxTree
+   */
+  CodeTester.testStructure = function testStructure (syntaxTree, structure, skipBlocks) {
     return CodeTester._traverseTree(syntaxTree, structure, true);
   };
 
+  /**
+   * Set whitelisted tokens, overriding the previous whitelist.
+   * Should only be called when CodeTester is used as wrapper around input.
+   * @param {Object} options A comma separated string, or array of strings
+   */
   CodeTester.prototype.whitelist = function setWhitelist (options) {
     var self = this;
     self._whitelist = []; // reset
@@ -105,6 +142,11 @@ CodeTester = (function () {
     });
   };
 
+  /**
+   * Set blacklisted tokens, overriding the previous blacklist.
+   * Should only be called when CodeTester is used as wrapper around input.
+   * @param {Object} options A comma separated string, or array of strings
+   */
   CodeTester.prototype.blacklist = function setBlacklist (options) {
     var self = this;
     self._blacklist = []; // reset
@@ -117,6 +159,11 @@ CodeTester = (function () {
     });
   };
 
+  /**
+   * Set desired structure, overriding the previous structure.
+   * Should only be called when CodeTester is used as wrapper around input.
+   * @param {Object} options A valid JSON object (or string)
+   */
   CodeTester.prototype.structure = function setStructure (options) {
     var self = this;
 
@@ -131,6 +178,10 @@ CodeTester = (function () {
     }
   };
 
+  /**
+   * Get the current contents of the wrapped input element.
+   * Should only be called when CodeTester is used as wrapper around input.
+   */
   CodeTester.prototype.getValue = function getEditorContents () {
     if (_.isFunction(this._editor.getValue)) {
       return this._editor.getValue();
@@ -138,8 +189,12 @@ CodeTester = (function () {
     return this._editor.val();
   };
 
+  /**
+   * Re-runs tests whenever the input contents are changed.
+   * Should only be called when CodeTester is used as wrapper around input.
+   * @param {Object} event Javascript event object
+   */
   CodeTester.prototype.change = function onChange (event) {
-    console.log(this);
     var results = CodeTester.test({
       codeString: this.getValue(),
       whitelist: this._whitelist,
@@ -152,20 +207,43 @@ CodeTester = (function () {
     }
   };
 
+  /**
+   * Register a callback to be executed whenever change event fires.
+   * Should only be called when CodeTester is used as wrapper around input.
+   * @param {Function} cb Callback to register
+   */
   CodeTester.prototype.onTest = function onTest (cb) {
     this._cb = cb;
   };
 
+  /**
+   * Unbind jQuery input listener.
+   * Should only be called when CodeTester is used as wrapper around jQuery input.
+   */
   CodeTester.stop = function stop () {
     if (this._boundEvent) {
       this._boundEvent.off('keyup.code_tester');
     }
   };
 
+  /**
+   * Internal method.
+   * Gets the subTree of a given syntaxTree.
+   * @param {Object} syntaxTree Tree of the format returned by esprima.parse
+   */
   CodeTester._getSubTree = function getSubTree (syntaxTree) {
     return syntaxTree.body || syntaxTree.consequent;
   };
 
+  /**
+   * Internal method.
+   * Attempt to match syntaxTree to the given structure with DFS. Returns true
+   * if syntaxTree matches structure, false otherwise.
+   * @param {Object} syntaxTree Tree of the format returned by esprima.parse
+   * @param {Object} structure JSON string of desired structure (AST format)
+   * @param {Boolean} skipBlocks Whether or not to ignore BlockStatements when
+   * traversing syntaxTree
+   */
   CodeTester._traverseTree = function traverseTree (syntaxTree, structure, skipBlocks) {
     // two empty trees match.
     if (!syntaxTree) {
@@ -209,7 +287,6 @@ CodeTester = (function () {
     // return true only if we've found everything we needed.
     return _.difference(desired, found).length === 0;
   };
-
 
   return CodeTester;
 })();

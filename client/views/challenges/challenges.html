@@ -26,29 +26,34 @@
         <form id="challenge-create">
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title"
+            <input type="text" class="input-sm form-control" id="title"
             placeholder="Title">
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" class="form-control" id="description"
+            <input type="text" class="input-sm form-control" id="description"
             placeholder="Description">
           </div>
           <div class="form-group">
             <label for="instructions">Instructions</label>
-            <textarea id="instructions" class="form-control" placeholder="Instructions (Markdown supported)"></textarea>
+            <textarea id="instructions" class="input-sm form-control" placeholder="Instructions (Markdown supported)"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="answer">Answer</label>
+            <input id="answer" class="input-sm form-control" placeholder="Answer">
           </div>
           <div class="form-group">
             <label for="whitelist">Whitelist</label>
-            <textarea id="whitelist" class="form-control" placeholder="Whitelist (comma separated)"></textarea>
+            <textarea id="whitelist" class="input-sm form-control" placeholder="Whitelist (comma separated)"></textarea>
           </div>
           <div class="form-group">
             <label for="blacklist">Blacklist</label>
-            <textarea id="blacklist" class="form-control" placeholder="Blacklist (comma separated)"></textarea>
+            <textarea id="blacklist" class="input-sm form-control" placeholder="Blacklist (comma separated)"></textarea>
           </div>
           <div class="form-group">
             <label for="structure">Structure</label>
-            <textarea id="structure" class="form-control" placeholder="JSON representation of structure"></textarea>
+            <textarea id="structure" class="input-sm form-control" placeholder="JSON representation of structure"></textarea>
+            <p class="help-block">Example: {&quot;WhileStatement&quot;:{&quot;ForStatement&quot;:{&quot;IfStatement&quot;:&quot;&quot;}}}</p>
           </div>
           <button type="submit" class="btn btn-primary btn-wide">Submit</button>
         </form>

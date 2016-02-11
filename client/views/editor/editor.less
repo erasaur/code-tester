@@ -1,3 +1,5 @@
+@import "../../include.import.less";
+
 .editor.ace_editor {
   overflow: hidden;
   position: absolute;
@@ -13,9 +15,9 @@
 .challenge-action {
   text-align: center;
   height: 50px;
-  background-color: #EFEFEF;
-  border: 1px solid #D3D3D3;
-  color: #797979;
+  background-color: @white-color;
+  border: 1px solid @dark-white-color;
+  color: @med-gray-color;
 }
 .challenge-header,
 .challenge-body,
@@ -33,4 +35,17 @@
 .btn-help {
   position: absolute;
   bottom: 0;
+}
+.editor-container {
+  background-color: @dark-gray-color;
+}
+.output-container,
+.feedback-container{
+  margin-bottom: 20px;
+}
+.feedback-error {
+  color: #F78181;
+}
+.feedback-success {
+  color: #9FF781;
 }

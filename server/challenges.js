@@ -4,6 +4,7 @@ Meteor.methods({
       title: String,
       description: String,
       instructions: String,
+      answer: String,
       whitelist: String,
       blacklist: String,
       structure: String
@@ -21,13 +22,21 @@ Meteor.methods({
     }
 
     challenge.htmlInstructions = marked(challenge.instructions);
+    challenge.htmlAnswer = marked(challenge.answer);
     challenge.createdAt = new Date();
     challenge.createdBy = this.userId;
-    challenge.requirements = {
-      whitelist: challenge.whitelist.split(','),
-      blacklist: challenge.blacklist.split(','),
-      structure: challenge.structure
-    };
+    challenge.requirements = {};
+
+    // TODO improve this, add more checks
+    _.each(['whitelist','blacklist'], function (req) {
+      if (challenge[req]) {
+        challenge.requirements[req] = [];
+        _.each(challenge[req].split(','), function (elem) {
+          challenge.requirements[req].push(elem.trim());
+        });
+      }
+    });
+    challenge.requirements.structure = challenge.structure || "";
 
     return Challenges.insert(challenge);
   }

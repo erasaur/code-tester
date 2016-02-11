@@ -10,8 +10,14 @@ Npm.depends({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
-  api.use('underscore');
-  api.addFiles('code-tester.js');
+  api.use([
+    'cosmos:browserify@0.9.2',
+    'underscore'
+  ], 'client');
+  api.addFiles([
+    'code-tester.js',
+    'esprima.browserify.js'
+  ], 'client');
 
   api.export('CodeTester');
 });

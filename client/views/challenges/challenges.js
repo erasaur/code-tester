@@ -6,9 +6,11 @@ Template.challenges.onCreated(function () {
   self.autorun(function (computation) {
     var limit = self._limit.get();
     var sub = self.subscribe('challenges', limit);
+    var fetched;
 
     if (sub.ready()) {
-      self._loaded.set(limit);
+      fetched = Challenges.find().count();
+      self._loaded.set(fetched);
     }
   });
 });
@@ -21,6 +23,7 @@ Template.challenges.helpers({
   showMore: function () {
     var loaded = Template.instance()._loaded.get();
     var fetched = Template.instance()._limit.get();
+
     return loaded >= fetched;
   }
 });
@@ -58,15 +61,16 @@ Template.challenges.events({
       title: title,
       description: description,
       instructions: instructions,
-      whitelist: whitelist,
-      blacklist: blacklist,
-      structure: structure
+      answer: answer,
+      whitelist: whitelist || '',
+      blacklist: blacklist || '',
+      structure: structure || ''
     };
 
     Meteor.call('createChallenge', challenge, function (error, result) {
       if (error) {
-        if (_.isString(error.reason)) {
-          alert(error.error);
+        if (_.isString(error.error)) {
+          alert(error.reason);
         } else {
           alert('Oops, something went wrong. Please try again later!');
         }

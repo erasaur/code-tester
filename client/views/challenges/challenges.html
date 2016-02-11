@@ -1,22 +1,28 @@
 <template name="challenges">
   <div class="col-xs-8 fill-height">
+    <h3>Available challenges</h3>
     <div class="challenge-list">
-      {{#each challenges}}
-        <div class="challenge-item">
-          <a href="{{pathFor 'editor'}}">{{title}}</a>
-          <p>{{description}}</p>
-          <small>Posted on {{formatDate createdAt}}</small>
-        </div>
-      {{/each}}
+      {{#if challenges.count}}
+        {{#each challenges}}
+          <a href="{{pathFor 'editor'}}" class="challenge-item">
+            <label>{{title}}</label>
+            <p>{{description}}</p>
+            <small>Posted on {{formatDate createdAt}}</small>
+          </a>
+        {{/each}}
 
-      {{#if showMore}}
-        <button id="js-show-more" class="btn btn-primary btn-wide">Show More</button>
+        {{#if showMore}}
+          <button id="js-show-more" class="btn btn-primary btn-wide">Show More</button>
+        {{/if}}
+      {{else}}
+        No challenges yet.
       {{/if}}
     </div>
   </div>
   <div class="col-xs-4">
     <div class="challenge-create">
       {{#if currentUser}}
+        <h3>Submit a new challenge</h3>
         <form id="challenge-create">
           <div class="form-group">
             <label for="title">Title</label>
